@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Lato:300,300i,700"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png" />
+
+    <title>Natours | Exciting tours for adventurous people</title>
+</head>
+<body>
+<header class="header">
+    <nav class="nav nav--tours">
+        <a href="#" class="nav__el">All tours</a>
+        <form class="nav__search">
+            <button class="nav__search-btn">
+                <svg>
+                    <use xlink:href="img/icons.svg#icon-search"></use>
+                </svg>
+            </button>
+            <input
+                    type="text"
+                    placeholder="Search tours"
+                    class="nav__search-input"
+            />
+        </form>
+    </nav>
+    <div class="header__logo">
+        <img src="/img/logo-green.png" alt="Natours logo" />
+    </div>
+    <nav class="nav nav--user">
+        <a href="#" class="nav__el">My bookings</a>
+        <a href="#" class="nav__el">
+            <img src="img/users/default.jpg" alt="User photo" class="nav__user-img" />
+            <span>Jino</span>
+        </a>
+
+        <!-- <button class="nav__el">Log in</button>
+        <button class="nav__el nav__el--cta">Sign up</button> -->
+    </nav>
+</header>
+
+<!-- In video, this <main> element is wrongly called: <section class="overview">. So in pug template, please use main.main instead of section.overview -->
+<!-- tour-cards.html -->
+
+<main class="main">
+    <div class="card-container">
+        <!-- Loop through each tour in the tours list -->
+        <div th:each="tour : ${tours}" class="card">
+            <div class="card__header">
+                <div class="card__picture">
+                    <div class="card__picture-overlay">&nbsp;</div>
+                    <img
+                            th:src="@{img/tours/__${tour.imageCover}__}"
+                            th:alt="${tour.name}"
+                            class="card__picture-img"
+                    />
+                </div>
+
+                <h3 class="heading-tertirary">
+                    <span th:text="${tour.name}"></span>
+                </h3>
+            </div>
+
+            <div class="card__details">
+                <h4 th:text="${tour.duration + '-day tour'}" class="card__sub-heading"></h4>
+                <p th:text="${tour.summary}" class="card__text"></p>
+                <div class="card__data">
+                    <svg class="card__icon">
+                        <use xlink:href="/img/icons.svg#icon-map-pin"></use>
+                    </svg>
+                    <span th:text="${tour.startLocation}"></span>
+                </div>
+                <div class="card__data">
+                    <svg class="card__icon">
+                        <use xlink:href="/img/icons.svg#icon-calendar"></use>
+                    </svg>
+                    <span th:text="${#strings.substring(tour.startDate,0,10)}"</span>
+                </div>
+                <div class="card__data">
+                    <svg class="card__icon">
+                        <use xlink:href="/img/icons.svg#icon-flag"></use>
+                    </svg>
+                    <span th:text="${tour.tourLocations.size()} +' stops'"></span>
+                </div>
+                <div class="card__data">
+                    <svg class="card__icon">
+                        <use xlink:href="/img/icons.svg#icon-user"></use>
+                    </svg>
+                    <span th:text="${tour.groupSize} +' people'"></span>
+                </div>
+            </div>
+
+            <div class="card__footer">
+                <p>
+                    <span th:text="'$' + ${tour.price}" class="card__footer-value"></span>
+                    <span class="card__footer-text">per person</span>
+                </p>
+                <p class="card__ratings">
+                    <span th:text="${tour.ratingAverage}" class="card__footer-value"></span>
+                    <span class="card__footer-text" th:text="'rating (' + ${tour.ratingsQuantity} + ')'"></span>
+                </p>
+                <a th:href="'/overview/'+${tour.id}" class="btn btn--green btn--small" th:id="${tour.id}">Details</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="footer">
+    <div class="footer__logo">
+        <img src="/img/logo-green.png" alt="Natours logo" />
+    </div>
+    <ul class="footer__nav">
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Download apps</a></li>
+        <li><a href="#">Become a guide</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+    <p class="footer__copyright">
+        &copy; by Jonas Schmedtmann. All rights reserved.
+    </p>
+</div>
+</body>
+</html>
